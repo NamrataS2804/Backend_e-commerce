@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 
 async function registerUser(req,res){
     const {name, phone,password} = req.body;
+    console.log(name, phone,password);
+
     var saltRounds = 10;
 
     var hashPassword = await bcrypt.hash(password, saltRounds)
@@ -32,6 +34,8 @@ async function registerUser(req,res){
 
 async function loginUser(req, res) {
     const { phone, password } = req.body;
+
+    console.log(phone, password );
     try {
       const user = await usersModel.findOne({ phone });
       if (!user) {
@@ -51,8 +55,9 @@ async function loginUser(req, res) {
           {
             id: user._id,
             phone: user.phone,
+            role:"Customer"
           },
-          "privatekey",
+          "hello",
           { expiresIn: "365d" }
         );
   
